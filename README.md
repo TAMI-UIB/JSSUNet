@@ -41,8 +41,7 @@ Run the following command:
 ---
 ## Test
 
-Todo...
-
+A specific script is still pending, but the training script includes a testing section that can be used as a reference
 ---
 ## 📌 Citation
 
