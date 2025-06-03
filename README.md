@@ -48,7 +48,7 @@ A specific script is still pending, but the training script includes a testing s
 If you find this work useful in your research, please consider citing:
 
 ```bibtex
-@misc{pereirasánchez2025modelguidednetworkclusterbasedoperators,
+@misc{pereirasánchez2025model,
       title={Model-Guided Network with Cluster-Based Operators for Spatio-Spectral Super-Resolution}, 
       author={Ivan Pereira-Sánchez and Julia Navarro and Ana Belén Petro and Joan Duran},
       year={2025},
