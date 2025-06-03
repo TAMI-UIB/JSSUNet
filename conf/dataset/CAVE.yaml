@@ -1,0 +1,10 @@
+name: CAVE
+datamodule:
+  _target_: src.data.cave.CAVEDataModule
+  batch_size: ${model.train.batch_size}
+  num_workers: ${model.train.num_workers}
+  sampling: ${sampling}
+  batch_shape: ${goal}
+  classes: 10
+ms_channels: 3
+hs_channels: 31

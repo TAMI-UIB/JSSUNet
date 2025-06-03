@@ -1,0 +1,100 @@
+defaults:
+  - _self_
+  - train/optimizer: ADAM
+  - train/scheduler: MultiStepLR
+  - train/loss: SR_SSR_FusionLoss
+
+train:
+  batch_size: 16
+  num_workers: 16
+  max_epochs: 1100
+
+name: JSSUNet
+features: 128
+callbacks:
+  - _target_: src.utils.callbacks.post_fine_tune.PostFineTune
+    max_epochs: ${model.train.max_epochs}
+    loss_function:
+      _target_: utils.losses.L1
+    lr: 1.e-3
+  - _target_: src.utils.callbacks.loss_scheduler.HPScheduler
+    epochs:
+      - 0
+      - 500
+      - 1000
+      - 1500
+    alpha_ms:
+      - 1
+      - 0.5
+      - 0
+      - 0
+    alpha_hs:
+      - 1
+      - 0.5
+      - 0
+      - 0
+    alpha_fusion:
+      - 0.5
+      - 1
+      - 0.5
+      - 0
+module:
+  _target_: src.models.jssunet.JSSUNet
+  _recursive_: false
+  ms_channels: ${dataset.ms_channels}
+  hs_channels: ${dataset.hs_channels}
+  sampling: ${sampling}
+  iter_stages: 4
+  shared: false
+  sr_cfg:
+    iter_stages: ${model.module.iter_stages}
+    up:
+      args:
+        channels: ${dataset.ms_channels}
+        sampling: ${sampling}
+        groups: 1
+        iter: 1
+        shared: false
+    down:
+      args:
+        channels: ${dataset.ms_channels}
+        sampling: ${sampling}
+    prox:
+      args:
+        channels: ${dataset.ms_channels}
+        kernel_size: 3
+        iter: 2
+        features: ${model.features}
+  ssr_cfg:
+    iter_stages: ${model.module.iter_stages}
+    up:
+      args:
+        ms_channels: ${dataset.ms_channels}
+        hs_channels: ${dataset.hs_channels}
+        classes: 10
+        features: ${model.features}
+    prox:
+      args:
+        channels: ${dataset.hs_channels}
+        kernel_size: 3
+        reduction: 1
+        features: ${model.features}
+        n_resblocks: 1
+  fusion_cfg:
+    sampling: ${sampling}
+    iter_stages: ${model.module.iter_stages}
+    features: ${model.features}
+    prox:
+      args:
+        hs_channels: ${dataset.hs_channels}
+        ms_channels: ${dataset.ms_channels}
+        features: ${model.features}
+        iter: 3
+        kernel_size: 3
+  postprocessing:
+    channels: ${dataset.hs_channels}
+    emb_dim: 8
+    k_nearest: 10
+    features: ${model.features}
+    patch_size: 5
+    window_size: 11

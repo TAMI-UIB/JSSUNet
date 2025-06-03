@@ -1,0 +1,4 @@
+_target_: src.utils.losses.SR_SSR_FusionLoss
+alpha_ms: 0.5
+alpha_hs: 0.2
+alpha_fusion: 0.3
