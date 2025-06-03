@@ -1,68 +1,33 @@
-# Multi-Head Attention Residual Unfolded Network for Model-Based Pansharpening
+# Model-Guided Network with Cluster-Based Operators for Spatio-Spectral Super-Resolution
 
-[![arXiv](https://img.shields.io/badge/arXiv-2409.02675-B31B1B.svg)](https://arxiv.org/abs/2409.02675)
+[![arXiv](https://img.shields.io/badge/arXiv-2409.02675-B31B1B.svg)](https://arxiv.org/abs/2505.24605)
 
 This repository contains the implementation and additional resources for the paper:
 
-**Multi-Head Attention Residual Unfolded Network for Model-Based Pansharpening**  
-*Ivan Pereira-Sánchez, Eloi Sans, Julia Navarro, Joan Duran*  
-Submmited to the International Journal of Computer Vision 
+**Model-Guided Network with Cluster-Based
+Operators for Spatio-Spectral Super-Resolution**  
+*Ivan Pereira-Sánchez, Julia Navarro, Ana Belén Petro and Joan Duran*  
+Submmited to the IEEE Journal of Selected Topics on Signal Proceessing
 
 ---
 
 ## 📄 Abstract
-The objective of pansharpening and hypersharpening is to accurately fuse a high-resolution panchromatic (PAN) image with a low-resolution multispectral (MS) or hyperspectral (HS) image, respectively. Unfolding fusion methods integrate the powerful representation capabilities of deep learning with the robustness of model-based approaches. These techniques usually involve unrolling the steps of the optimization scheme derived from the minimization of a variational energy into a deep learning framework, resulting in efficient and highly interpretable architectures. In this paper, we present a model-based deep unfolded method for satellite image fusion. Our approach relies on a variational formulation that incorporates the classic observation model for MS/HS data, a high-frequency injection constraint, and a general prior. For the unfolding stage, we design upsampling and downsampling layers that leverage geometric information encoded in the PAN image through residual networks. The core of our method is a Multi-Head Attention Residual Network (MARNet), which combines multiple head attentions with residual learning to capture image self-similarities using nonlocal patch-based operators. Additionally, we include a post-processing module based on the MARNet architecture to further enhance the quality of the fused images. Experimental results on PRISMA, QuickBird, and WorldView2 datasets demonstrate the superior performance of our method, both at reduced and full-scale resolutions, along with its ability to generalize across different sensor configurations and varying spatial and spectral resolutions.
+This paper addresses the problem of reconstructing a high-resolution hyperspectral image from a low-resolution multispectral observation. While spatial super-resolution and spectral super-resolution have been extensively studied, joint spatio-spectral super-resolution remains relatively explored. We propose an end-to-end model-driven framework that explicitly decomposes the joint spatio-spectral super-resolution problem into spatial super-resolution, spectral super-resolution and fusion tasks. Each sub-task is addressed by unfolding a variational-based approach, where the operators involved in the proximal gradient iterative scheme are replaced with tailored learnable modules. In particular, we design an upsampling operator for spatial super-resolution based on classical back-projection algorithms, adapted to handle arbitrary scaling factors. Spectral reconstruction is performed using learnable cluster-based upsampling and downsampling operators. For image fusion, we integrate low-frequency estimation and high-frequency injection modules to combine the spatial and spectral information from spatial super-resolution and spectral super-resolution outputs. Additionally, we introduce an efficient nonlocal post-processing step that leverages image self-similarity by combining a multi-head attention mechanism with residual connections. Extensive evaluations on several datasets and sampling factors demonstrate the effectiveness of our approach.
 
 ---
 
 ## 📚 arXiv Preprint
 
-The paper is currently under revision, and the first preprint is available on [arXiv](https://arxiv.org/abs/2409.02675).
+The paper is currently under revision, and the first preprint is available on [arXiv](https://arxiv.org/abs/2505.24605).
 
 
----
-
-## 🛠️ Environment
-
-You can set up the development environment using either **Conda** or **pip**.
-
-#### 📦 Option 1: Using Conda (`environment.yml`)
-
-1. Create the environment:
-
-   ```bash
-   conda env create -f environment.yml
-   ```
-
-2. Activate the environment:
-
-   ```bash
-   conda activate MARNet
-   ```
-
----
-
-#### 💡 Option 2: Using pip (`requirements.txt`)
-
-1. (Optional) Create and activate a virtual environment:
-
-   ```bash
-   python -m venv venv
-   source venv/bin/activate  
-   ```
-
-2. Install dependencies:
-
-   ```bash
-   pip install -r requirements.txt
-   ```
 ---
 
 ## ⚙️ Setup
 
 To begin, create an .env file in the project root directory and define the `DATASET_PATH` variable, pointing to the directory where your dataset is stored.
 
-We provide an example DataModule using WorldView-2 satellite imagery. This module requires the data to be preprocessed according to the Wald protocol and stored as cropped .h5 files.
+We provide an example DataModule using CAVE images. This module requires the data to generate the multispectral low and high resolution and the hyperspectral low and high resolution and stored as cropped .h5 files.
 
 Also, you can adapt the dataset class accordingly how you have the data stored. Please note that we are unable to share the dataset used for training due to data access restrictions.
 
@@ -76,18 +41,7 @@ Run the following command:
 ---
 ## Test
 
-For reduced resolution run following command:
-
-   ```bash
-   python test_ref.py +model.ckpt_path=${CKPT_PATH} 
-   ```
-
-For full resolution run following command:
-```bash
-python test_non_ref.py +model.ckpt_path=${CKPT_PATH} 
-```
-
-Make sure to replace `${CKPT_PATH}` with the actual path to your checkpoint file.
+Todo...
 
 ---
 ## 📌 Citation
@@ -95,10 +49,13 @@ Make sure to replace `${CKPT_PATH}` with the actual path to your checkpoint file
 If you find this work useful in your research, please consider citing:
 
 ```bibtex
-@article{pansharpening2024,
-  title={Multi-Head Attention Residual Unfolded Network for Model-Based Pansharpening},
-  author={Pereira-S{\'a}nchez, Ivan and Sans, Eloi and Navarro, Julia and Duran, Joan},
-  journal={arXiv preprint arXiv:2409.02675},
-  year={2024}
+@misc{pereirasánchez2025modelguidednetworkclusterbasedoperators,
+      title={Model-Guided Network with Cluster-Based Operators for Spatio-Spectral Super-Resolution}, 
+      author={Ivan Pereira-Sánchez and Julia Navarro and Ana Belén Petro and Joan Duran},
+      year={2025},
+      eprint={2505.24605},
+      archivePrefix={arXiv},
+      primaryClass={eess.IV},
+      url={https://arxiv.org/abs/2505.24605}, 
 }
 ```
