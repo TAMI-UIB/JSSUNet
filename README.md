@@ -1,6 +1,6 @@
 # Model-Guided Network with Cluster-Based Operators for Spatio-Spectral Super-Resolution
 
-[![arXiv](https://img.shields.io/badge/arXiv-2409.02675-B31B1B.svg)](https://arxiv.org/abs/2505.24605)
+[![arXiv](https://img.shields.io/badge/arXiv-2505.24605-B31B1B.svg)](https://arxiv.org/abs/2505.24605)
 
 This repository contains the implementation and additional resources for the paper:
 
